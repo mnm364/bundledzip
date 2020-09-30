@@ -55,7 +55,7 @@ if not os.path.exists(output):
 # Make and write zip to file
 for index, bundle in enumerate(tqdm(bundles)):
     unique = datetime.fromtimestamp(seconds + index).strftime('%Y%m%d%H%M%S') 
-    with zipfile.ZipFile(f'{output}/{bundlename}-{unique}.zip', 'w') as z:
+    with zipfile.ZipFile(f'{output}/{bundlename}{unique}.zip', 'w') as z:
         for filename in bundle.keys():
             filepath = os.path.join(directory, filename)
             z.write(os.path.abspath(filepath), filename)
