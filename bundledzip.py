@@ -14,7 +14,7 @@ UNITS = {'GB': 1e9, 'MB': 1e6, 'KB': 1e3, None: 1}
 parser = argparse.ArgumentParser(description='Compresses a set of files into a set of bundles of some specified size.')
 parser.add_argument('-d', '--directory', required=True, help='The input directory that contains the files to bundle')
 parser.add_argument('-o', '--output', required=True, help='The directory to write the bundles; created if it does not exist')
-parser.add_argument('-e', '--extension', help='The extension of files to zip; unspecified will zip all files')
+parser.add_argument('-e', '--extension', help='The case-insensitive extension of files to zip; unspecified will zip all files')
 parser.add_argument('-n', '--bundle-name', required=True, help='The name to give the bundled files')
 parser.add_argument('-s', '--bundle-size', type=int, required=True, help='The size of a bundle, whose unit is given by --bundle-unit')
 parser.add_argument('-u', '--bundle-unit', type=str, choices=UNITS.keys(), default=None, help='The unit of the bundle size. "None" will simply treat size as count, which is the default')
@@ -38,7 +38,7 @@ for entry in os.scandir(directory):
 
     if not entry.is_file:
         continue
-    if extension and not filename.endswith('.' + extension):
+    if extension and not filename.lower().endswith('.' + extension.lower()):
         continue
 
     filesize = entry.stat().st_size if bundleunit else 1
